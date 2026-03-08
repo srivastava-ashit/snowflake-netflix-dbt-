@@ -1,36 +1,102 @@
-# Snowflake Netflix-Scale Analytics Engineering Project — Progress Log
+# Project Progress Tracker
 
-Use this file to track completed work and next steps.
+## Phase 0 — Planning
+
+Status: Completed
+
+Tasks Completed
+
+- Defined project objective
+- Created architecture design
+- Identified data entities
+- Defined repository structure
+- Documented project charter
+
+Deliverables
+
+- README.md
+- architecture.md
+- project_charter.md
+- progress.md
 
 ---
 
-## Template
+## Phase 1 — Data Generation
 
-**Date:** YYYY-MM-DD  
-**Phase:** [Phase 1/2/3/etc.]  
-**Completed:**
-- 
-**Issues Faced:**
-- 
-**Next Steps:**
-- 
-**Notes:**
-- 
+Status: Not Started
+
+Tasks
+
+- Generate synthetic users dataset
+- Generate content catalog dataset
+- Generate streaming events dataset
 
 ---
 
-## Example Entry
+## Phase 2 — Streaming Ingestion
 
-**Date:** 2026-02-25  
-**Phase:** Phase 0 — Planning  
-**Completed:**
-- Project charter finalized
-- Architecture designed
-- Volume and dataset strategy defined
-**Issues Faced:**
-- None at planning stage
-**Next Steps:**
-- Generate synthetic datasets
-- Create Bronze tables in Snowflake
-**Notes:**
-- Environment confirmed ready: Snowflake, Python, dbt installed
+Status: Not Started
+
+Tasks
+
+- Create Kafka topics
+- Implement Spark streaming consumer
+- Ingest events to Bronze layer
+
+---
+
+## Phase 3 — Storage Layer
+
+Status: Not Started
+
+Tasks
+
+- Implement Bronze tables
+- Implement Silver tables
+- Deduplication logic
+
+---
+
+## Phase 4 — Snowflake Integration
+
+Status: Not Started
+
+Tasks
+
+- Load curated data to Snowflake
+- Configure warehouse and schema
+
+---
+
+## Phase 5 — dbt Transformations
+
+Status: Not Started
+
+Tasks
+
+- Create staging models
+- Create fact and dimension models
+- Implement SCD2
+
+---
+
+## Phase 6 — Orchestration
+
+Status: Not Started
+
+Tasks
+
+- Create Airflow DAG
+- Schedule pipeline
+
+---
+
+## Phase 7 — Observability
+
+Status: Not Started
+
+Tasks
+
+- dbt tests
+- alerting system
+- pipeline monitoring
