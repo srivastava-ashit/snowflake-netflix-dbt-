@@ -1,66 +1,63 @@
 
----
+## Data Flow
 
-## Detailed Architecture & Data Flow
+1. User activity generates events.
+2. Events are streamed to Kafka topics.
+3. Spark Structured Streaming consumes Kafka messages.
+4. Raw events are stored in Bronze layer.
+5. Cleaned events stored in Silver tables.
+6. Aggregated analytics models created in Gold layer.
+7. dbt manages transformations inside Snowflake.
 
-```markdown
-# Snowflake Netflix-Scale Analytics Engineering Project — Architecture
+## Medallion Architecture
 
-## Layered Architecture
+### Bronze
+Raw streaming ingestion.
 
-### Bronze Layer (Raw)
-- Raw playback events
-- Immutable, append-only
-- Partitioned by event_date + region
-- No business logic
+Example tables
 
-### Silver Layer (Cleaned)
-- Deduplicated and cleaned
-- Incremental merge using event_ts watermark
-- Handles late-arriving data
-- Partition-aware
+bronze.events_raw
 
-### Gold Layer (Business)
-- Fact tables: playback, daily aggregates
-- Dimensions: dim_user (SCD2), dim_title, dim_device
-- Experiment mart for A/B testing
-- Optional ML feature tables
+### Silver
+Cleaned and validated data.
 
----
+Example tables
 
-## Incremental Strategy
-- Merge-based incremental models
-- Watermark-based partition pruning
-- Late-arrival window simulation (24–48 hrs)
+silver.events_clean
 
----
+### Gold
+Business-level datasets.
 
-## SCD2 Strategy
-- Timestamp-based snapshots for dim_user
-- Backfill support without full refresh
-- Historical tracking of subscription and region changes
+Example tables
 
----
+gold.daily_user_engagement
 
-## Performance Optimizations
-- Micro-partition pruning
-- Clustering keys on high-cardinality columns
-- Batch load of raw events using `COPY INTO`
-- Incremental run to minimize warehouse usage
+gold.content_popularity
 
----
+## Data Modeling
 
-## Observability
-- dbt tests (not_null, unique, accepted_values)
-- run_results.json parsing for failure alerts
-- Slim CI simulation
-- Query profile monitoring
+### Fact Table
 
----
+fact_streaming_events
 
-## Data Volume Simulation
-| Phase | Rows | Purpose |
-|-------|------|---------|
-| Phase 1 | 5M | Functional validation |
-| Phase 2 | 20–50M | Performance testing |
-| Phase 3 | 100M+ | Scale simulation
+### Dimension Tables
+
+dim_users (SCD Type 2)
+
+dim_content
+
+dim_date
+
+## Engineering Challenges
+
+### Late Arriving Events
+Events may arrive out of order.
+
+### Duplicate Events
+Streaming systems sometimes deliver duplicate messages.
+
+### Data Skew
+Popular content can cause uneven data distribution.
+
+### Idempotent Processing
+Pipeline must safely reprocess data.
